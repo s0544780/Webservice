@@ -49,8 +49,6 @@ include("templates/header.inc.php");
         </div>
     </div>
 
-
-
     <br />
 
     <input type="file"   name="datei[]">
