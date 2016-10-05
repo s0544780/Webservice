@@ -11,7 +11,7 @@
  <hr>
   <div class="container">
   	<footer>
-        <p>Powered by <a href="http://www.php-einfach.de" target="_blank">PHP-Einfach.de</a></p>
+        <p>Powered by <a href="http://www.malendo.de" target="_blank">Malendo.de</a></p>
       </footer>
    </div> 
 

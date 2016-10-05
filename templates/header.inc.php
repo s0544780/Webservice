@@ -45,7 +45,7 @@
 						<td><button type="submit" class="btn btn-success">Login</button></td>
 					</tr>
 					<tr>
-						<td><label style="margin-bottom: 0px; font-weight: normal;"><input type="checkbox" name="angemeldet_bleiben" value="remember-me" title="Angemeldet bleiben"  checked="checked" style="margin: 0; vertical-align: middle;" /> <small>Angemeldet bleiben</small></label></td>
+						<td><label style="margin-bottom: 0; font-weight: normal;"><input type="checkbox" name="angemeldet_bleiben" value="remember-me" title="Angemeldet bleiben"  checked="checked" style="margin: 0; vertical-align: middle;" /> <small>Angemeldet bleiben</small></label></td>
 						<td><small><a href="passwortvergessen.php">Passwort vergessen</a></small></td>
 						<td></td>
 					</tr>
@@ -83,7 +83,10 @@
       <li><a href="verkaeufe.php">Verkäufe</a></li>
       <li><a href="offeneverkaeufe.php">unbezahlte Verkäufe</a></li>
       <li><a href="auszahlungen.php">Auszahlungen</a></li>
-      <li><a href="uploader.php">File-Upload</a></li>
+        <?php
+        if($user['paket'] === '1') {
+            echo '<li><a href="uploader.php">Produkt hinzufügen</a></li>';
+        } ?>
       <li><a href="faq.php">FAQs</a></li>
     </ul>
     </div>

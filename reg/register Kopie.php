@@ -3,7 +3,7 @@ session_start();
 require_once("inc/config.inc.php");
 require_once("inc/functions.inc.php");
 
-include("templates/header.inc.php")
+include("templates/headerextern.inc.php")
 ?>
 <div class="container main-container registration-form">
 <h1>Registrierung</h1>
@@ -15,10 +15,11 @@ if(isset($_GET['register'])) {
 	$vorname = trim($_POST['vorname']);
 	$nachname = trim($_POST['nachname']);
 	$email = trim($_POST['email']);
+    $hersteller = $_POST['hersteller'];
 	$passwort = $_POST['passwort'];
 	$passwort2 = $_POST['passwort2'];
 	
-	if(empty($vorname) || empty($nachname) || empty($email)) {
+	if(empty($vorname) || empty($nachname) || empty($email) || empty($hersteller)) {
 		echo 'Bitte alle Felder ausfüllen<br>';
 		$error = true;
 	}
@@ -52,8 +53,8 @@ if(isset($_GET['register'])) {
 	if(!$error) {	
 		$passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
 		
-		$statement = $pdo->prepare("INSERT INTO users (email, passwort, vorname, nachname) VALUES (:email, :passwort, :vorname, :nachname)");
-		$result = $statement->execute(array('email' => $email, 'passwort' => $passwort_hash, 'vorname' => $vorname, 'nachname' => $nachname));
+		$statement = $pdo->prepare("INSERT INTO users (email, passwort, vorname, nachname, username) VALUES (:email, :passwort, :vorname, :nachname, :hersteller)");
+		$result = $statement->execute(array('email' => $email, 'passwort' => $passwort_hash, 'vorname' => $vorname, 'nachname' => $nachname, 'hersteller' => $hersteller));
 		
 		if($result) {		
 			echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
@@ -83,6 +84,11 @@ if($showFormular) {
 <label for="inputEmail">E-Mail:</label>
 <input type="email" id="inputEmail" size="40" maxlength="250" name="email" class="form-control" required>
 </div>
+
+    <div class="form-group">
+		<label for="inputHersteller">Hersteller:</label>
+		<input type="text" id="inputHersteller" size="40" maxlength="250" name="hersteller" class="form-control" required>
+	</div>
 
 <div class="form-group">
 <label for="inputPasswort">Dein Passwort:</label>

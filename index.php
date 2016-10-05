@@ -36,8 +36,9 @@ if(isset($_POST['email']) && isset($_POST['passwort'])) {
 }
 
 $email_value = "";
-if(isset($_POST['email']))
+if(isset($_POST['email'])) {
 	$email_value = htmlentities($_POST['email']);
+}
 
 include("templates/headerextern.inc.php");
 ?>
