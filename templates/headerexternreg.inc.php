@@ -16,7 +16,6 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/navbar.css" rel="stylesheet">
 
-
   </head>
   <body>
 

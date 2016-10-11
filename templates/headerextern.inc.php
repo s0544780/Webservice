@@ -36,8 +36,7 @@
         <?php else: ?>
         <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav navbar-right">
-             <li><a href="http://malendo.de">Externer Bereich</a></li>
-             <li><a href="internal.php">Interner Bereich</a></li>
+            <li><a href="internal.php">Startseite Händlerbereich</a></li>
             <li><a href="settings.php">Einstellungen</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>

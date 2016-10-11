@@ -38,7 +38,6 @@ join thersteller H on A.kHersteller = H.kHersteller
 where H.cName = '$user[username]' ");
 $result = $statement->execute();
 $count = 1;
-$netamount = 0;
 while($row = $statement->fetch()) {
 	echo "<tr>";
 	echo "<td>".$count++."</td>";
@@ -60,7 +59,6 @@ while($row = $statement->fetch()) {
     };
 	echo "<td>".$row['cBestellNr']."</td>";
 	echo "</tr>";
-  $netamount = $netamount + ($row['nAnzahl'] * $row['fPreis']*1.19);
 }
 
 
@@ -68,7 +66,7 @@ while($row = $statement->fetch()) {
 </table>
 
 </div>
-<?php echo number_format($netamount, 2)." €" ; ?>
+
 <?php
 include("templates/footer.inc.php")
 ?>

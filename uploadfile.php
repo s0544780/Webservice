@@ -6,6 +6,8 @@ require_once("inc/config.inc.php");
 require_once("inc/functions.inc.php");
 $user = check_user();
 
+$note = "Ihre Eingaben wurden erfolgreich gespeichert.";
+
 if(isset($_FILES['datei'])){
 
 foreach($_FILES['datei']['tmp_name'] as $key => $tmp_name)
@@ -24,7 +26,7 @@ $extension = strtolower(pathinfo($_FILES['datei']['name'][$key], PATHINFO_EXTENS
 	// Verlässt die Schleife ohne Fehler, falls weniger als 5 Bilder hochgeladen werden
 
 	if(empty($_FILES['datei']['size'][$key])){
-		break;
+		continue;
 	}
 //Überprüfung der Dateiendung
 $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif');
@@ -61,20 +63,22 @@ if(file_exists($new_path)) { //Falls Datei existiert, hänge eine Zahl an den Da
 
 //Alles okay, verschiebe Datei an neuen Pfad
 	move_uploaded_file($_FILES['datei']['tmp_name'][$key], $new_path);
-	echo 'Bild erfolgreich hochgeladen: <a href="'.$new_path.'">'.$new_path.'</a><br />';
+	//echo 'Bild erfolgreich hochgeladen: <a href="'.$new_path.'">'.$new_path.'</a><br />';
 
 }
 }else{
-	echo "something went wrong";
+	$note = "something went wrong";
 }
 
 
+$t=time();
 
 
-$dz=fopen($upload_folder."daten.csv","a");
+
+$dz=fopen($upload_folder.date("Y_m_d_",$t)."neueArtikel.csv","a");
 		 if(!$dz)
 			 {
-				 echo "Datei konnte nicht zum Schreiben geöffnet werden.";
+				 $note = "Datei konnte nicht zum Schreiben geöffnet werden.";
 				 exit;
 			 }
 
@@ -82,9 +86,16 @@ $dz=fopen($upload_folder."daten.csv","a");
 		 .$_POST["Breite"].";".$_POST["Länge"].";"
 		 .$_POST["Gewicht"].";".$_POST["Farbe"].";\n");
 
-		 echo "Ihre Eingaben wurden gespeichert.";
+fclose($dz);	 
+echo '<script>alert("'.$note.'")</script>';
 
- fclose($dz);
+$link = "<script><!--
+window.location = 'http://localhost:8888/Webservice/uploader.php';
+//–></script>";
+
+echo $link;
+
+
 
 
 ?>

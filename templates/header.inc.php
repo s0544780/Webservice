@@ -58,8 +58,6 @@
         <?php else: ?>
         <div id="navbar" class="navbar-collapse collapse">
          <ul class="nav navbar-nav navbar-right">
-             <li><a href="http://malendo.de">Externer Bereich</a></li>
-             <li><a href="internal.php">Interner Bereich</a></li>
             <li><a href="settings.php">Einstellungen</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
@@ -78,13 +76,12 @@
     <h2 class="offscreen">W3C Web Resources</h2>
     <div id="hmenu">
     <ul>
-      <li><a href="internal.php">Startseite</a></li>
       <li><a href="lagerbestand.php">Lagerbestand</a></li>
       <li><a href="verkaeufe.php">Verkäufe</a></li>
       <li><a href="offeneverkaeufe.php">unbezahlte Verkäufe</a></li>
       <li><a href="auszahlungen.php">Auszahlungen</a></li>
         <?php
-        if($user['paket'] === '1') {
+        if($user['paket'] !== '1') {
             echo '<li><a href="uploader.php">Produkt hinzufügen</a></li>';
         } ?>
       <li><a href="faq.php">FAQs</a></li>

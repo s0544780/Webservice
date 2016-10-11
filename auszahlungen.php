@@ -19,12 +19,13 @@ include("templates/header.inc.php");
 	<th>#</th>
 	<th>von</th>
 	<th>bis</th>
+	<th>Gebühr</th>
 	<th>Auszahlungsbetrag</th>
 </tr>
 
 <?php
 $statement = $pdo->prepare("
-select H.cName as Hersteller,fPreis * sum(nAnzahl) as Auszahlungsbetrag
+select H.cName as Hersteller,sum(fPreis * (1+(A.fMwSt/100)) * 0.12) * 1.19 as BruttoProvi
 , case
   WHEN DATEDIFF(B.dBezahltDatum, date_format(B.dBezahltDatum, '%Y.%m.01')) <  DATEDIFF(LAST_DAY(B.dBezahltDatum), B.dBezahltDatum)
   THEN @interval_start := date_format(B.dBezahltDatum, '%Y-%m-01')
@@ -35,6 +36,7 @@ select H.cName as Hersteller,fPreis * sum(nAnzahl) as Auszahlungsbetrag
   THEN @interval_ende := date_format(B.dBezahltDatum, '%Y-%m-01') + INTERVAL 14 DAY
   ELSE @interval_ende := last_day(B.dBezahltDatum)
   END as Auszahlung_bis
+,  sum(fPreis * (1+(A.fMwSt/100))) - sum(fPreis * (1+(A.fMwSt/100)) * 0.12) * 1.19  as Auszahlungsbetrag
 from tbestellung B
 join twarenkorb K on B.kWarenkorb = K.kWarenkorb
 join twarenkorbpos KP on KP.kWarenkorb = K.kWarenkorb and kArtikel != 0
@@ -51,7 +53,8 @@ while($row = $statement->fetch()) {
 	echo "<td>".$count++."</td>";
 	echo "<td>".$row['Auszahlung_von']."</td>";
 	echo "<td>".$row['Auszahlung_bis']."</td>";
-	echo "<td>".number_format($row[Auszahlungsbetrag]* 1.19,2)."</td>";
+	echo "<td>".number_format($row[BruttoProvi],2)." €</td>";
+    echo "<td>".number_format($row[Auszahlungsbetrag],2)." €</td>";
 	echo "</tr>";
 }
 ?>
