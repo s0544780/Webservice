@@ -69,9 +69,8 @@ $user = check_user();
 
 ?>
 
-<div class="container main-container">
+<div class="container">
 
-<h1>Einstellungen</h1>
 
 <?php
 if(isset($success_msg) && !empty($success_msg)):
@@ -95,15 +94,24 @@ if(isset($error_msg) && !empty($error_msg)):
 endif;
 ?>
 
-<div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#data" aria-controls="home" role="tab" data-toggle="tab">Persönliche Daten</a></li>
-    <li role="presentation"><a href="#email" aria-controls="profile" role="tab" data-toggle="tab">E-Mail</a></li>
-    <li role="presentation"><a href="#passwort" aria-controls="messages" role="tab" data-toggle="tab">Passwort</a></li>
-		<li role="presentation"><a href="#service" aria-controls="messages" role="tab" data-toggle="tab">Services</a></li>
-  </ul>
+ <div class="page-content">
+    	<div class="row">
+		  <div class="col-md-2">
+		  	<div class="sidebar content-box" style="display: block;">
+                 <!-- Navbar -->
+                    <?php include("templates/nav.inc.php") ?>                       
+             </div>
+		  </div>
+           
+            <div class="col-md-10">
+                 <div class="content-box-large">
+                      <!-- Nav tabs -->
+                      <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#data" aria-controls="home" role="tab" data-toggle="tab">Persönliche Daten</a></li>
+                        <li role="presentation"><a href="#email" aria-controls="profile" role="tab" data-toggle="tab">E-Mail</a></li>
+                        <li role="presentation"><a href="#passwort" aria-controls="messages" role="tab" data-toggle="tab">Passwort</a></li>
+		                <li role="presentation"><a href="#service" aria-controls="messages" role="tab" data-toggle="tab">Services</a></li>
+                      </ul>
 
   <!-- Persönliche Daten-->
   <div class="tab-content">
@@ -116,14 +124,12 @@ endif;
     				<input class="form-control" id="inputVorname" name="vorname" type="text" value="<?php echo htmlentities($user['vorname']); ?>" required>
     			</div>
     		</div>
-
     		<div class="form-group">
     			<label for="inputNachname" class="col-sm-2 control-label">Nachname</label>
     			<div class="col-sm-10">
     				<input class="form-control" id="inputNachname" name="nachname" type="text" value="<?php echo htmlentities($user['nachname']); ?>" required>
     			</div>
     		</div>
-
     		<div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-primary">Speichern</button>
@@ -131,7 +137,6 @@ endif;
 			</div>
     	</form>
     </div>
-
     <!-- Änderung der E-Mail-Adresse -->
     <div role="tabpanel" class="tab-pane" id="email">
     	<br>
@@ -150,8 +155,7 @@ endif;
     				<input class="form-control" id="inputEmail" name="email" type="email" value="<?php echo htmlentities($user['email']); ?>" required>
     			</div>
     		</div>
-
-
+    		
     		<div class="form-group">
     			<label for="inputEmail2" class="col-sm-2 control-label">E-Mail (wiederholen)</label>
     			<div class="col-sm-10">
@@ -218,14 +222,15 @@ endif;
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary">Speichern</button>
 					</div>
-			</div>
+			    </div>
 			</form>
 		</div>
   </div>
-
+  </div>
 </div>
 
-
+</div>
+</div>
 </div>
 <?php
 include("templates/footer.inc.php")

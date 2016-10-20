@@ -27,7 +27,7 @@ if(isset($_POST['email']) && isset($_POST['passwort'])) {
 			setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //Valid for 1 year
 		}
 
-		header("location: internal.php");
+		header("location: dashboard.php");
 		exit;
 	} else {
 		$error_msg =  "E-Mail oder Passwort war ungültig<br><br>";
@@ -40,34 +40,46 @@ if(isset($_POST['email'])) {
 	$email_value = htmlentities($_POST['email']);
 }
 
-include("templates/headerextern.inc.php");
+include("templates/headerext.inc.php");
 ?>
- <div class="container small-container-330 form-signin">
-  <form action="login.php" method="post">
-	<h2 class="form-signin-heading">Login</h2>
+ 
 
 <?php
 if(isset($error_msg) && !empty($error_msg)) {
 	echo $error_msg;
 }
 ?>
-	<label for="inputEmail" class="sr-only">E-Mail</label>
-	<input type="email" name="email" id="inputEmail" class="form-control" placeholder="E-Mail" value="<?php echo $email_value; ?>" required autofocus>
-	<label for="inputPassword" class="sr-only">Passwort</label>
-	<input type="password" name="passwort" id="inputPassword" class="form-control" placeholder="Passwort" required>
-	<div class="checkbox">
-	  <label>
+
+ <form action="login.php" method="post">
+	<div class="page-content container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="login-wrapper">
+			        <div class="box">
+			            <div class="content-wrap">
+			                <h6>Sign In</h6>
+			           
+			                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="E-Mail" value="<?php echo $email_value; ?>" required autofocus>
+			               <input type="password" name="passwort" id="inputPassword" class="form-control" placeholder="Passwort" required>
+			               <label>
 		<input type="checkbox" value="remember-me" name="angemeldet_bleiben" value="1" checked> Angemeldet bleiben
 	  </label>
+			                <div class="action">
+			                    <button class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
+			                </div>  
+                                       
+			            </div>
+			        </div>
+
+			        <div class="already">
+			            <p>Don't have an account yet?</p>
+			           <a href="passwortvergessen.php">Passwort vergessen</a>
+			        </div>
+			    </div>
+			</div>
+		</div>
 	</div>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-	<br>
-	<a href="passwortvergessen.php">Passwort vergessen</a>
-  </form>
-
-</div> <!-- /container -->
+ </form>  
 
 
-<?php
-include("templates/footer.inc.php")
-?>
+

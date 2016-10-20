@@ -1,12 +1,12 @@
-
-
 <?php
+
+$picPaths = array();
+
 session_start();
 require_once("inc/config.inc.php");
 require_once("inc/functions.inc.php");
-$user = check_user();
 
-$note = "Ihre Eingaben wurden erfolgreich gespeichert.";
+$user = check_user();
 echo "<img src='twister-polka-dots-free-vector.png' />";
 if(isset($_FILES['datei'])){
 
@@ -64,38 +64,61 @@ if(file_exists($new_path)) { //Falls Datei existiert, hänge eine Zahl an den Da
 //Alles okay, verschiebe Datei an neuen Pfad
 	move_uploaded_file($_FILES['datei']['tmp_name'][$key], $new_path);
 	//echo 'Bild erfolgreich hochgeladen: <a href="'.$new_path.'">'.$new_path.'</a><br />';
-
+    $picPaths[] = $new_path;
+   
 }
 }else{
 	$note = "something went wrong";
 }
 
+$words_kommagetrennt = implode(" ", $_POST['Suchbegriffe']);
+$words = implode(",", $_POST['Suchbegriffe']);
 
-$t=time();
+                            
+                             
+$statement = $pdo->prepare("
+INSERT INTO tmpArtikel(
+Artikelname, HAN, Beschreibung, Verkaufspreis, Artikelmenge, Hersteller, Artikelgewicht, Haendlerpaket, Hoehe, Breite, Tiefe, Mailadresse, Kategorie, Suchbegriffe, Suchbegriffe_Seo, Meta_Description, Bild_1, Bild_2, Bild_3, Bild_4, Bild_5, Verkaufseinheit, Material, Stil, Farbe_1, Farbe_2, Farbe_3)
+VALUES 
+(
+'{$_POST['Name']}',
+'{$_POST['HAN']}',
+'{$_POST['Beschreibung']}',
+'{$_POST['Verkaufspreis']}',
+'{$_POST['Menge']}',
+'{$user[username]}',
+'{$_POST['Gewicht']}',
+'{$user[paket]}',
+'{$_POST['Hoehe']}',
+'{$_POST['Breite']}',
+'{$_POST['Tiefe']}',
+'{$user[email]}',
+'{$_POST['Kategorie']}',
+'{$words}',
+'{$words_kommagetrennt}',
+'{$_POST['Beschreibung']}',
+'$picPaths[0]',
+'$picPaths[1]',
+'$picPaths[2]',
+'$picPaths[3]',
+'$picPaths[4]',
+'Stk.',
+'{$_POST['Material']}',
+'{$_POST['Stil']}',
+'{$_POST['Farbe'][0]}',
+'{$_POST['Farbe'][1]}',
+'{$_POST['Farbe'][2]}'
+);"
+);
+    
+$result = $statement->execute();
 
+echo '<script>alert("Alles ok")</script>';
 
-
-$dz=fopen($upload_folder.date("Y_m_d_",$t)."neueArtikel.csv","a");
-		 if(!$dz)
-			 {
-				 $note = "Datei konnte nicht zum Schreiben geöffnet werden.";
-				 exit;
-			 }
-
- fputs($dz,$_POST["Name"].";".$_POST["Höhe"].";"
-		 .$_POST["Breite"].";".$_POST["Länge"].";"
-		 .$_POST["Gewicht"].";".$_POST["Farbe"].";\n");
-
-fclose($dz);	 
-echo '<script>alert("'.$note.'")</script>';
-
-$link = "<script><!--
-window.location = 'uploader.php';
-//–></script>";
+$link = "<script>
+window.location = 'formular.php';
+</script>";
 
 echo $link;
-
-
-
 
 ?>

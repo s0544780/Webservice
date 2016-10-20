@@ -9,21 +9,6 @@ require_once("inc/functions.inc.php");
 $user = check_user();
 
 include("templates/header.inc.php");
-?>
-
-<div class="container main-container">
-<div class="panel panel-default">
-<table class="table">
-
-<tr>
-	<th>#</th>
-	<th>von</th>
-	<th>bis</th>
-	<th>Gebühr</th>
-	<th>Auszahlungsbetrag</th>
-</tr>
-
-<?php
 $statement = $pdo->prepare("
 select H.cName as Hersteller,sum(fPreis * (1+(A.fMwSt/100)) * 0.12) * 1.19 as BruttoProvi
 , case
@@ -48,7 +33,42 @@ GROUP BY Auszahlung_von, Auszahlung_bis
 ");
 $result = $statement->execute();
 $count = 1;
-while($row = $statement->fetch()) {
+
+?>
+
+ <div class="page-content">
+    	<div class="row">
+		  <div class="col-md-2">
+		  	<div class="sidebar content-box" style="display: block;">
+                 <!-- Navbar -->
+                    <?php include("templates/nav.inc.php") ?>
+                                    
+             </div>
+		  </div>
+  				<div class="col-md-10">
+  					<div class="content-box-large">
+		  				<div class="panel-heading">
+							
+							<div class="panel-options">
+								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+							</div>
+						</div>
+		  				<div class="panel-body">
+		  					<table class="table"> <!--  -->
+				              <thead>
+				                <tr>
+				                <th>#</th>
+	<th>von</th>
+	<th>bis</th>
+	<th>Gebühr</th>
+	<th>Auszahlungsbetrag</th>
+				                </tr>
+				              </thead>
+				              <tbody>
+				               <?php
+                                            // classes: success, danger, warning
+				            while($row = $statement->fetch()) {
 	echo "<tr>";
 	echo "<td>".$count++."</td>";
 	echo "<td>".$row['Auszahlung_von']."</td>";
@@ -57,11 +77,16 @@ while($row = $statement->fetch()) {
     echo "<td>".number_format($row[Auszahlungsbetrag],2)." €</td>";
 	echo "</tr>";
 }
-?>
-</table>
+				               ?>
+			
+				              </tbody>
+				            </table>
+		  				</div>
+		  			</div>
+  				</div>
+</div>
 </div>
 
-</div>
 <?php
 include("templates/footer.inc.php")
 ?>

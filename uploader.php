@@ -1,24 +1,25 @@
-<?php
-header("Content-Type: text/html; charset=utf-8");
-session_start();
-require_once("inc/config.inc.php");
-require_once("inc/functions.inc.php");
-
+<?php include("templates/header.inc.php");
 //Überprüfe, dass der User eingeloggt ist
 //Der Aufruf von check_user() muss in alle internen Seiten eingebaut sein
 $user = check_user();
-
-include("templates/header.inc.php");
 ?>
 
-<div class="container main-container">
+<div class="page-content">
+    	<div class="row">
+		  <div class="col-md-2">
+		  	<div class="sidebar content-box" style="display: block;">
+                 <!-- Navbar -->
+                    <?php include("templates/nav.inc.php") ?>
+                                    
+             </div>
+		  </div>
 
-<div class="panel panel-default">
-
+<div class="col-md-10">
+  					<div class="content-box-large">
+		  				<div class="panel-heading">
 <form action="uploadfile.php" method="post" enctype="multipart/form-data" >
 
        <br />
-
 
     <div class="row">
         <div class="col-xs-3">
@@ -51,7 +52,7 @@ include("templates/header.inc.php");
 
     <br />
 
-    <input type="file"   name="datei[]">
+    <input type="file" name="datei[]">
     <input type="file" name="datei[]">
     <input type="file" name="datei[]">
     <input type="file" name="datei[]">
@@ -62,10 +63,7 @@ include("templates/header.inc.php");
 
 
 </form>
-
-
-</div>
-</div>
+ </div> </div> </div> </div> </div> 
 <?php
 include("templates/footer.inc.php")
 ?>
